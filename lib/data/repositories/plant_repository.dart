@@ -27,6 +27,16 @@ class PlantRepository {
     return null;
   }
 
+  Future<int> updatePlant(PlantModel plant) async {
+    final db = await _database.database;
+    return await db.update(
+      'plants',
+      plant.toMap(),
+      where: 'id = ?',
+      whereArgs: [plant.id],
+    );
+  }
+
   Future<int> deletePlant(int id) async {
     final db = await _database.database;
     return await db.delete(

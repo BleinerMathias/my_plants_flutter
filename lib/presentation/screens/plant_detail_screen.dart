@@ -1,41 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:my_plantss/data/models/plant_model.dart';
 import 'package:my_plantss/data/repositories/plant_repository.dart';
+import 'package:my_plantss/presentation/screens/add_plant_screen.dart';
 
-class PlantDetailScreen extends StatelessWidget {
+class PlantDetailScreen extends StatefulWidget {
     final int plantId;
 
-    PlantDetailScreen({super.key, required this.plantId});
+    const PlantDetailScreen({super.key, required this.plantId});
 
-    final PlantRepository _repository = PlantRepository();
+    @override
+    _PlantDetailScreenState createState() => _PlantDetailScreenState();
+}
+
+class _PlantDetailScreenState extends State<PlantDetailScreen> {
+    PlantModel? _plant;
+
+    @override
+    void initState() {
+        super.initState();
+        _loadPlant(); // Carrega a planta na inicialização
+    }
+
+    Future<void> _loadPlant() async {
+        final plant = await PlantRepository().getPlantById(widget.plantId);
+        setState(() {
+            _plant = plant;
+        });
+    }
 
     @override
     Widget build(BuildContext context) {
-        return FutureBuilder<PlantModel?>(
-            future: _repository.getPlantById(plantId),
-            builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Scaffold(body: Center(child: CircularProgressIndicator()));
-                } else if (snapshot.hasError || !snapshot.hasData) {
-                    return const Scaffold(body: Center(child: Text('Erro ao carregar planta')));
-                } else {
-                    final plant = snapshot.data!;
-                    return Scaffold(
-                        appBar: AppBar(title: Text(plant.name)),
-                        body: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Text(plant.description, style: const TextStyle(fontSize: 18)),
-                                    const SizedBox(height: 16),
-                                    Text('Você tem essa planta? ${plant.hasPlant ? "Sim" : "Não"}'),
-                                ],
-                            ),
-                        ),
-                    );
-                }
-            },
+        if (_plant == null) {
+            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+
+        return Scaffold(
+            appBar: AppBar(
+                title: Text(_plant!.name),
+                actions: [
+                    IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () async {
+                            final updated = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddPlantScreen(
+                                        onPlantAdded: () {}, // Pode ser usado para atualizar a lista se necessário
+                                        plant: _plant, // Passa a planta para edição
+                                    ),
+                                ),
+                            );
+
+                            // Se a planta foi editada, recarrega os dados
+                            if (updated == true) {
+                                _loadPlant(); // Recarrega os dados da planta após a edição
+                            }
+                        },
+                    ),
+                ],
+            ),
+            body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text(_plant!.description, style: const TextStyle(fontSize: 18)),
+                        const SizedBox(height: 16),
+                        Text('Você tem essa planta? ${_plant!.hasPlant ? "Sim" : "Não"}'),
+                    ],
+                ),
+            ),
         );
     }
 }

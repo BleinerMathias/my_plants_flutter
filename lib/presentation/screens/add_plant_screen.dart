@@ -4,8 +4,9 @@ import '../../data/repositories/plant_repository.dart';
 
 class AddPlantScreen extends StatefulWidget {
   final VoidCallback onPlantAdded; // Callback para atualizar a lista
+  final PlantModel? plant; // Planta para edição (opcional)
 
-  const AddPlantScreen({super.key, required this.onPlantAdded});
+  const AddPlantScreen({super.key, required this.onPlantAdded, this.plant});
 
   @override
   _AddPlantScreenState createState() => _AddPlantScreenState();
@@ -18,16 +19,32 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   final PlantRepository _repository = PlantRepository();
 
-  void _addPlant() async {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.plant != null) {
+      _nameController.text = widget.plant!.name;
+      _descriptionController.text = widget.plant!.description;
+      _hasPlant = widget.plant!.hasPlant;
+    }
+  }
+
+  void _addOrUpdatePlant() async {
     final plant = PlantModel(
+      id: widget.plant?.id, // Passa o ID se estiver editando
       name: _nameController.text,
       description: _descriptionController.text,
       hasPlant: _hasPlant,
     );
 
-    await _repository.addPlant(plant);
-    widget.onPlantAdded(); // Chama o callback para atualizar a lista
-    Navigator.pop(context); // Volta para a tela anterior
+    if (widget.plant == null) {
+      await _repository.addPlant(plant);
+    } else {
+      await _repository.updatePlant(plant); // Adicione este método ao repositório
+    }
+
+    // Retorna um valor para indicar que a planta foi editada
+    Navigator.pop(context, true);
   }
 
   @override
@@ -40,7 +57,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Adicionar Planta')),
+      appBar: AppBar(title: const Text('Adicionar ou Editar Planta')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -63,7 +80,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
               },
             ),
             ElevatedButton(
-              onPressed: _addPlant,
+              onPressed: _addOrUpdatePlant,
               child: const Text('Salvar'),
             ),
           ],
@@ -72,3 +89,4 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     );
   }
 }
+

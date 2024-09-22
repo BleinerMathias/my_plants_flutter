@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_plantss/data/models/plant_model.dart';
 import 'package:my_plantss/data/repositories/plant_repository.dart';
+import 'package:my_plantss/presentation/widgets/plant_card.dart';
 import 'add_plant_screen.dart';
 import 'plant_detail_screen.dart';
 
@@ -62,11 +63,9 @@ class _PlantListScreenState extends State<PlantListScreen> {
                 itemCount: plants.length,
                 itemBuilder: (context, index) {
                     final plant = plants[index];
-                    return ListTile(
-                        title: Text(plant.name),
-                        subtitle: Text(plant.description),
+                    return PlantCard(
+                        plant: plant,
                         onTap: () {
-                            // Navega para a tela de detalhes da planta
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -74,12 +73,9 @@ class _PlantListScreenState extends State<PlantListScreen> {
                                 ),
                             );
                         },
-                        trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                                _deletePlant(plant.id!);
-                            },
-                        ),
+                        onDelete: () {
+                            _deletePlant(plant.id!); // Chama a função de exclusão
+                        },
                     );
                 },
             ),
