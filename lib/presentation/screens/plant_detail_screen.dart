@@ -45,15 +45,14 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AddPlantScreen(
-                                        onPlantAdded: () {}, // Pode ser usado para atualizar a lista se necessário
-                                        plant: _plant, // Passa a planta para edição
+                                        onPlantAdded: () {},
+                                        plant: _plant,
                                     ),
                                 ),
                             );
 
-                            // Se a planta foi editada, recarrega os dados
                             if (updated == true) {
-                                _loadPlant(); // Recarrega os dados da planta após a edição
+                                _loadPlant();
                             }
                         },
                     ),
