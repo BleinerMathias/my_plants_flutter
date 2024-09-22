@@ -6,7 +6,7 @@ This project was developed as part of the studies in the Postgraduate Program in
 
 ## Video
 
-- [Watching video demo](https://youtu.be/b0SJKfFFHKc)
+- [Video demo](https://youtu.be/b0SJKfFFHKc)
 
 ## Features
 
