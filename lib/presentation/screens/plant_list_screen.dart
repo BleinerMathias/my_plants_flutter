@@ -74,7 +74,7 @@ class _PlantListScreenState extends State<PlantListScreen> {
                             );
                         },
                         onDelete: () {
-                            _deletePlant(plant.id!); // Chama a função de exclusão
+                            _deletePlant(plant.id!);
                         },
                     );
                 },

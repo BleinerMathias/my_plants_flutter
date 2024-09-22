@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 import '../database/SQLITE_Plant.dart';
 import '../models/plant_model.dart';
 

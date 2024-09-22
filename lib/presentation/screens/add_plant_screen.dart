@@ -31,7 +31,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
   void _addOrUpdatePlant() async {
     final plant = PlantModel(
-      id: widget.plant?.id, // Passa o ID se estiver editando
+      id: widget.plant?.id,
       name: _nameController.text,
       description: _descriptionController.text,
       hasPlant: _hasPlant,
@@ -40,10 +40,8 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     if (widget.plant == null) {
       await _repository.addPlant(plant);
     } else {
-      await _repository.updatePlant(plant); // Adicione este método ao repositório
+      await _repository.updatePlant(plant);
     }
-
-    // Retorna um valor para indicar que a planta foi editada
     Navigator.pop(context, true);
   }
 
