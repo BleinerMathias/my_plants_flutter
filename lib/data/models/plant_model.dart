@@ -11,7 +11,7 @@ class PlantModel {
       'id': id,
       'name': name,
       'description': description,
-      'hasPlant': hasPlant ? 1 : 0,
+      'hasPlant': hasPlant ? 1 : 0, // Armazena como 1 ou 0
     };
   }
 

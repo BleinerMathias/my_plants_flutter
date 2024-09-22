@@ -7,7 +7,9 @@ class PlantRepository {
 
   Future<int> addPlant(PlantModel plant) async {
     final db = await _database.database;
-    return await db.insert('plants', plant.toMap());
+    final result = await db.insert('plants', plant.toMap());
+    print('Planta adicionada com ID: $result');
+    return result;
   }
 
   Future<List<PlantModel>> getPlants() async {

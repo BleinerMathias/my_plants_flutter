@@ -30,5 +30,6 @@ class PlantDatabase {
       hasPlant INTEGER NOT NULL
     )
     ''');
+    print('Tabela plants criada.');
   }
 }
