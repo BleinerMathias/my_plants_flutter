@@ -1,16 +1,21 @@
-# my_plantss
+# My Plants
 
-A project to manage a list of plants, where users can create and view information about each plant.
+## Description
 
-## Getting Started
+This project was developed as part of the studies in the Postgraduate Program in Mobile Devices. The main objective is to work with the SQLite database in a Flutter application, allowing users to register, view, and manage their plants efficiently.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Plant Registration**: Add new plants with name, description, and an option to indicate if you own the plant.
+- **Plant Listing**: View all registered plants in a list.
+- **Plant Details**: Click on a plant to see additional details and options to edit or delete.
+- **Data Editing**: Update the information of an existing plant.
+- **Plant Deletion**: Remove plants from your catalog.
+- **SQLite Database**: Efficient storage of plant information.
+- **Initial Data**: The database is populated with example plants upon the first run.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter**: Framework for building mobile applications.
+- **SQLite**: Lightweight database management system for local storage.
+- **Dart**: Programming language used for developing the application.
