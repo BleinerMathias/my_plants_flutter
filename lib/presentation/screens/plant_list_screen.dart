@@ -26,6 +26,34 @@ class _PlantListScreenState extends State<PlantListScreen> {
         });
     }
 
+    void _deletePlant(int id) async {
+        final result = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+                return AlertDialog(
+                    title: const Text('Deletar Planta'),
+                    content: const Text('Tem certeza que deseja deletar esta planta?'),
+                    actions: [
+                        TextButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: const Text('Cancelar'),
+                        ),
+                        TextButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: const Text('Deletar'),
+                        ),
+                    ],
+                );
+            },
+        );
+
+        if (result == true) {
+            await _repository.deletePlant(id);
+            _loadPlants(); // Atualiza a lista após a deleção
+        }
+    }
+
+
     @override
     Widget build(BuildContext context) {
         return Scaffold(
@@ -38,6 +66,7 @@ class _PlantListScreenState extends State<PlantListScreen> {
                         title: Text(plant.name),
                         subtitle: Text(plant.description),
                         onTap: () {
+                            // Navega para a tela de detalhes da planta
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -45,6 +74,12 @@ class _PlantListScreenState extends State<PlantListScreen> {
                                 ),
                             );
                         },
+                        trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                                _deletePlant(plant.id!);
+                            },
+                        ),
                     );
                 },
             ),

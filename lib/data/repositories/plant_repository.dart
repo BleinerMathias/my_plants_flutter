@@ -26,4 +26,14 @@ class PlantRepository {
     }
     return null;
   }
+
+  Future<int> deletePlant(int id) async {
+    final db = await _database.database;
+    return await db.delete(
+      'plants',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
 }
