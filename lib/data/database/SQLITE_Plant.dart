@@ -22,14 +22,41 @@ class PlantDatabase {
   }
 
   Future _createDB(Database db, int version) async {
-    await db.execute('''
-    CREATE TABLE plants (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      description TEXT NOT NULL,
-      hasPlant INTEGER NOT NULL
-    )
-    ''');
-    print('Tabela plants criada.');
+    await db.execute(''' 
+      CREATE TABLE plants (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        description TEXT NOT NULL,
+        hasPlant INTEGER NOT NULL
+      )
+      ''');
+
+    final List<Map<String, dynamic>> seeds = [
+      {
+        'name': 'Aloe Vera',
+        'description': 'Planta suculenta com propriedades medicinais.',
+        'hasPlant': 0,
+      },
+      {
+        'name': 'Pothos (Epipremnum aureum)',
+        'description': 'Uma planta de fácil cuidado, ideal para ambientes internos.',
+        'hasPlant': 0,
+      },
+      {
+        'name': 'Ficus Lyrata (Figueira Lira)',
+        'description': 'Planta ornamental com folhas grandes e brilhantes.',
+        'hasPlant': 0,
+      },
+      {
+        'name': 'Sansevieria (Língua de Sogra)',
+        'description': 'Resistente e fácil de cuidar, ótima para purificar o ar.',
+        'hasPlant': 0,
+      },
+    ];
+
+    for (var seed in seeds) {
+      await db.insert('plants', seed);
+    }
   }
+
 }
