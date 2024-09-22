@@ -4,6 +4,10 @@
 
 This project was developed as part of the studies in the Postgraduate Program in Mobile Devices. The main objective is to work with the SQLite database in a Flutter application, allowing users to register, view, and manage their plants efficiently.
 
+## Video
+
+- [Watching video demo](https://youtu.be/b0SJKfFFHKc)
+
 ## Features
 
 - **Plant Registration**: Add new plants with name, description, and an option to indicate if you own the plant.
